@@ -1,2 +1,2 @@
-# BsLam
-This projec to build a dashboard system for eye disease treatment
+# Dashboard-Projects
+This repository to build a dashboard systems
