@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, PickleType, ForeignKey, DateTime, Boolean, UniqueConstraint, Text
+from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey, DateTime, Boolean, UniqueConstraint, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from os import urandom
@@ -43,6 +43,7 @@ class Customer(Base):
     __tablename__ = 'customer'
     ######### CUSTOMER'S PART ##########
     id = Column(Integer, primary_key=True, autoincrement=True)
+    timereported = Column(TIMESTAMP)
     name = Column(String(128), nullable=False)
     dob = Column(String(16))
     phone = Column(Integer, nullable=False)
