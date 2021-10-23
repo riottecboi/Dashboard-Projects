@@ -4350,7 +4350,7 @@ section {
 }
 
 .table-data {
-    height: 472px;
+    /*height: 472px;*/
     overflow-y: auto;
 }
 

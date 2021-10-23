@@ -56,7 +56,7 @@ def menu():
     if ss.get('if_logged') == True:
         return render_template('index.html')
     else:
-        return render_template('error.html',  message='Session expired', redirect='/login')
+        return render_template('error.html',  message='Authentication error', redirect='/login')
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -82,4 +82,4 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template('error.html', message='Session Expired', redirect='/login')
+    return render_template('error.html', message='Log out', redirect='/login')

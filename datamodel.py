@@ -67,10 +67,14 @@ class Customer(Base):
     clevo = Column(Text, nullable=False)#close left eye vision optics
     pd = Column(Text, nullable=False)#pupil distance
     lens = Column(String(128))#lens brand name
+    ######### DIAGNOSE ##########
+    dre = Column(String(128))#diagnose right eye
+    dle = Column(String(128))#diagnose left eye
     ######### DRUG'S PART #############
     drug_name = Column(String(128))
-    times = Column(Integer)
-    methods = Column(String(16))
+    day_per_times = Column(Integer)
+    quantity_per_times = Column(Integer)
+    method = Column(String(16))
     eyes = Column(String(16))
     use_when = Column(String(32))
     quantity = Column(Integer)
