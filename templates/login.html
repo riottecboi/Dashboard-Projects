@@ -5,9 +5,6 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
     <title>Login</title>
@@ -42,8 +39,14 @@
             <div class="container">
                 <div class="login-wrap">
                     <div class="login-content">
+                        <div class="login-logo">
+                            <a href="#">
+                                <img src="../static/images/icon/techinno.png" alt="Techinno">
+                            </a>
+                        </div>
                         <div class="login-form">
-                            <form action="" method="post">
+                            <form action="{{ url_for('login') }}" method="post">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label>Username</label>

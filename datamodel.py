@@ -12,10 +12,19 @@ class User(Base):
     username = Column(String(255), primary_key=True)
     password = Column(String(255))
     password_salt = Column(String(255))
+    authenticated = Column(Boolean, default=False)
     is_admin = Column(Boolean, default=False)
 
     def is_active(self):
         return True
+
+    def is_authenticated(self):
+        return self.authenticated
+
+    def set_authenticated(self, session, value):
+        self.authenticated = value
+        session.add(self)
+        session.commit()
 
     def get_id(self):
         return self.username
@@ -67,4 +76,3 @@ class Customer(Base):
     quantity = Column(Integer)
     unit = Column(String(32))
     note = Column(Text)
-
