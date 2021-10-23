@@ -496,25 +496,31 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <button type="button" onclick="insRow()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>  Thêm</button>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
                                                 <div class="col-12 col-md-12">
                                                     <div class="table-responsive table-data">
                                                         <table class="table" id="bill">
                                                             <thead>
                                                                 <tr class="tr-shadow">
-                                                                <th>Tên thuốc</th>
-                                                                <th>Lần/ngày</th>
-                                                                <th>Số lượng/lần</th>
-                                                                <th>Phương thức</th>
-                                                                <th>Mắt</th>
-                                                                <th>Sử dụng</th>
-                                                                <th>Số lượng</th>
-                                                                <th>Đơn vị</th>
-                                                                <th><button type="button" onclick="insRow()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>  Thêm</button></th>
-                                                            </tr>
+                                                                    <th></th>
+                                                                    <th>Tên thuốc</th>
+                                                                    <th>Lần/ngày</th>
+                                                                    <th>Số lượng/lần</th>
+                                                                    <th>Phương thức</th>
+                                                                    <th>Mắt</th>
+                                                                    <th>Sử dụng</th>
+                                                                    <th>Số lượng</th>
+                                                                    <th>Đơn vị</th>
+                                                                </tr>
                                                             </thead>
 
                                                             <tbody>
                                                             <tr class="tr-shadow" id="drug-instructions">
+                                                                <td><button type="button" onclick="deleteRow(this)" class="btn btn-danger btn-sm" style="display:none"><i class="fa fa-minus"></i>  Xóa</button></td>
                                                                 <td><input type="text" id="drug_name" name="drug_name" class="form-control" style="width: auto"></td>
                                                                 <td><input type="number" id="day_per_times" name="day_per_times" class="form-control" style="width: auto"></td>
                                                                 <td><input type="number" id="quantity_per_times" name="quantity_per_times" class="form-control" style="width: auto"></td>
@@ -542,7 +548,6 @@
                                                                         <option value="2">Viên</option>
                                                                     </select>
                                                                 </td>
-                                                                <td><button type="button" onclick="deleteRow(this)" class="btn btn-danger btn-sm" style="display:none"><i class="fa fa-minus"></i>  Xóa</button></td>
                                                             </tr>
                                                             </tbody>
                                                         </table>
@@ -559,7 +564,7 @@
 
                                                     var x = document.getElementById('bill');
                                                     var new_row = x.rows[1].cloneNode(true);
-                                                    new_row.cells[8].getElementsByTagName('button')[0].removeAttribute('style');
+                                                    new_row.cells[0].getElementsByTagName('button')[0].removeAttribute('style');
                                                     x.appendChild(new_row);
                                                 }
                                             </script>
