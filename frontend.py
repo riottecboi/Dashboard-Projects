@@ -65,6 +65,13 @@ def get_customers():
     session.close()
     return customners
 
+def update_status(id, status):
+    session = sessionFactory()
+    customer = session.query(Customer).filter_by(id=id).first()
+    customer.status = status
+    session.commit()
+    session.close()
+
 @login.user_loader
 def user_loader(username):
     session = sessionFactory()
@@ -155,3 +162,18 @@ def login():
 def logout():
     session.clear()
     return render_template('error.html', message='Log out', redirect='/login')
+
+@app.route('/status', methods=["POST"])
+def status():
+    id = request.form.get('id')
+    check = request.form.get('update')
+    if check == 'Hoàn thành':
+        status = 'Đang thực hiện'
+    else:
+        status = 'Hoàn thành'
+    try:
+        update_status(id,status)
+    except Exception as e:
+        print(str(e))
+        pass
+    return redirect(url_for('menu'))

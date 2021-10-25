@@ -175,7 +175,7 @@
                                             {% for data in customers %}
                                             <tr class="tr-shadow">
                                                 <td>
-                                                    <span class="block-email">0123</span>
+                                                    <span class="block-email">{{data.id}}</span>
                                                 </td>
                                                 <td class="desc">{{data.name}}</td>
                                                 <td>
@@ -183,7 +183,16 @@
                                                 </td>
                                                 <td>{{data.timereported}}</td>
                                                 <td>
-                                                    <span class="status--process">{{data.status}}</span>
+                                                    <form action="{{ url_for('status') }}" method="POST">
+                                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                                        <input type="hidden" name="id" value="{{data.id}}">
+                                                        {% if data.status != 'Hoàn thành' %}
+                                                        <button name="update" type="submit" class="btn btn-success btn-sm" value="{{data.status}}">{{data.status}}</button>
+                                                        {% else %}
+                                                        <button name="update" type="submit" class="btn btn-danger btn-sm" value="{{data.status}}">{{data.status}}</button>
+                                                        {% endif %}
+                                                    </form>
+<!--                                                    <span class="status&#45;&#45;process">{{data.status}}</span>-->
                                                 </td>
                                                 <td>
                                                     <div class="table-data-feature">
