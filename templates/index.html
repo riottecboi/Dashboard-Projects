@@ -198,7 +198,6 @@
                                                     <span class="block-email">0123456789</span>
                                                 </td>
                                                 <td>2018-09-27 02:12</td>
-                                                <td>2018-09-27 02:12</td>
                                                 <td>
                                                     <span class="status--process">Đang tiến hành</span>
                                                 </td>
@@ -221,7 +220,6 @@
                                                 <td>
                                                     <span class="block-email">0123456789</span>
                                                 </td>
-                                                <td>2018-09-27 02:12</td>
                                                 <td>2018-09-27 02:12</td>
                                                 <td>
                                                     <span class="status--denied">Hoàn thành</span>
@@ -337,7 +335,8 @@
                                         <strong>Thêm thông tin</strong>
                                     </div>
                                     <div class="card-body card-block">
-                                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                        <form action="{{ url_for('menu') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label for="fullname" class=" form-control-label">Họ và tên</label>
@@ -395,9 +394,9 @@
                                                 <div class="col-12 col-md-9">
                                                     <select name="distance" id="distance" class="form-control-sm form-control">
                                                         <option disabled selected>Lựa chọn</option>
-                                                        <option value="1">Nhìn xa</option>
-                                                        <option value="2">Nhìn gần</option>
-                                                        <option value="3">Cả hai</option>
+                                                        <option value="Nhìn xa">Nhìn xa</option>
+                                                        <option value="Nhìn gần">Nhìn gần</option>
+                                                        <option value="Cả hai">Cả hai</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -527,16 +526,16 @@
                                                                 <td>
                                                                     <select name="method" id="method" class="form-control-sm form-control" style="width: auto">
                                                                         <option disabled selected>Lựa chọn</option>
-                                                                        <option value="1">Nhỏ</option>
-                                                                        <option value="2">Uống</option>
+                                                                        <option value="Nhỏ">Nhỏ</option>
+                                                                        <option value="Uống">Uống</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
                                                                     <select name="eyes" id="eyes" class="form-control-sm form-control" style="width: auto">
                                                                         <option disabled selected>Lựa chọn</option>
-                                                                        <option value="1">Mắt phải</option>
-                                                                        <option value="2">Mắt trái</option>
-                                                                        <option value="3">Cả hai</option>
+                                                                        <option value="Mắt phải">Mắt phải</option>
+                                                                        <option value="Mắt trái">Mắt trái</option>
+                                                                        <option value="Cả hai">Cả hai</option>
                                                                     </select>
                                                                 </td>
                                                                 <td><input type="text" id="use_when" name="use_when" class="form-control" style="width: auto"></td>
@@ -544,8 +543,8 @@
                                                                 <td>
                                                                     <select name="unit" id="unit" class="form-control-sm form-control" style="width: auto">
                                                                         <option disabled selected>Lựa chọn</option>
-                                                                        <option value="1">Lọ</option>
-                                                                        <option value="2">Viên</option>
+                                                                        <option value="Lọ">Lọ</option>
+                                                                        <option value="Viên">Viên</option>
                                                                     </select>
                                                                 </td>
                                                             </tr>

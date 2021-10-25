@@ -1,14 +1,16 @@
-from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey, DateTime, Boolean, UniqueConstraint, Text
+from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey, DateTime, Boolean, UniqueConstraint, Text, UnicodeText
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from os import urandom
 from binascii import hexlify
 from hashlib import sha512
+from datetime import datetime
+import pytz
 
 Base = declarative_base()
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
     username = Column(String(255), primary_key=True)
     password = Column(String(255))
     password_salt = Column(String(255))
@@ -49,34 +51,41 @@ class User(Base):
 
 
 class Customer(Base):
-    __tablename__ = 'customer'
+    __tablename__ = 'customers'
     ######### CUSTOMER'S PART ##########
     id = Column(Integer, primary_key=True, autoincrement=True)
-    timereported = Column(TIMESTAMP)
-    name = Column(String(128), nullable=False)
-    dob = Column(String(16))
+    timereported = Column(DateTime, default=datetime.now(pytz.timezone('Asia/Bangkok')))
+    name = Column(String(128,convert_unicode=True,collation='utf8mb4_general_ci'), nullable=False)
+    dob = Column(String(16,convert_unicode=True))
     phone = Column(Integer, nullable=False)
-    rev = Column(Text, nullable=False)#right eye vision
-    lev = Column(Text, nullable=False)#left eye vision
-    distance = Column(String(64))#(far, close, both)
-    frev = Column(Text, nullable=False)#far right eye vision
-    flev = Column(Text, nullable=False)#far left eye vision
-    frevo = Column(Text, nullable=False)#far right eye vision optics
-    flevo = Column(Text, nullable=False)#far left eye vision optics
-    crevo = Column(Text, nullable=False)#close right eye vision optics
-    clevo = Column(Text, nullable=False)#close left eye vision optics
-    pd = Column(Text, nullable=False)#pupil distance
-    lens = Column(String(128))#lens brand name
+    rev = Column(Text(convert_unicode=True), nullable=False)#right eye vision
+    lev = Column(Text(convert_unicode=True), nullable=False)#left eye vision
+    distance = Column(String(64,convert_unicode=True,collation='utf8mb4_general_ci'))#(far, close, both)
+    frev = Column(Text(convert_unicode=True), nullable=False)#far right eye vision
+    flev = Column(Text(convert_unicode=True), nullable=False)#far left eye vision
+    frevo = Column(Text(convert_unicode=True), nullable=False)#far right eye vision optics
+    flevo = Column(Text(convert_unicode=True), nullable=False)#far left eye vision optics
+    crevo = Column(Text(convert_unicode=True), nullable=False)#close right eye vision optics
+    clevo = Column(Text(convert_unicode=True), nullable=False)#close left eye vision optics
+    pd = Column(Text(convert_unicode=True), nullable=False)#pupil distance
+    lens = Column(String(128,convert_unicode=True,collation='utf8mb4_general_ci'))#lens brand name
     ######### DIAGNOSE ##########
-    dre = Column(String(128))#diagnose right eye
-    dle = Column(String(128))#diagnose left eye
+    dre = Column(String(128,convert_unicode=True,collation='utf8mb4_general_ci'))#diagnose right eye
+    dle = Column(String(128,convert_unicode=True,collation='utf8mb4_general_ci'))#diagnose left eye
     ######### DRUG'S PART #############
-    drug_name = Column(String(128))
+    drug_name = Column(String(128,convert_unicode=True,collation='utf8mb4_general_ci'))
     day_per_times = Column(Integer)
     quantity_per_times = Column(Integer)
-    method = Column(String(16))
-    eyes = Column(String(16))
-    use_when = Column(String(32))
+    method = Column(String(16,convert_unicode=True,collation='utf8mb4_general_ci'))
+    eyes = Column(String(16,convert_unicode=True,collation='utf8mb4_general_ci'))
+    use_when = Column(String(32,convert_unicode=True,collation='utf8mb4_general_ci'))
     quantity = Column(Integer)
-    unit = Column(String(32))
-    note = Column(Text)
+    unit = Column(String(32,convert_unicode=True,collation='utf8mb4_general_ci'))
+    note = Column(Text(convert_unicode=True,collation='utf8mb4_general_ci'))
+
+class Record(Base):
+    __tablename__ = 'records'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    customerid = Column(Integer, ForeignKey('customers.id'), nullable=False)
+    jsondata = Column(String(1024,convert_unicode=True,collation='utf8mb4_general_ci'))
+    date_updated = Column(DateTime, default=datetime.now(pytz.timezone('Asia/Bangkok')))
