@@ -127,27 +127,10 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><i class="fa fa-user" style="margin-right: 10px"></i>Bs Lam</a>
+                                            <a class="js-acc-btn" href="#"><i class="fa fa-user" style="margin-right: 10px"></i>{{user}}</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
-                                                <div class="image">
-                                                    <a href="#">
-                                                        <img src="../static/images/icon/avatar-01.jpg" alt="John Doe" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                        <a href="#">john doe</a>
-                                                    </h5>
-                                                    <span class="email">johndoe@example.com</span>
-                                                </div>
-                                            </div>
                                             <div class="account-dropdown__body">
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
-                                                </div>
                                                 <div class="account-dropdown__item">
                                                     <a href="#">
                                                         <i class="zmdi zmdi-settings"></i>Setting</a>
@@ -189,17 +172,18 @@
                                 <div class="table-responsive table--no-card m-b-40">
                                     <table class="table table-data2">
                                         <tbody>
+                                            {% for data in customers %}
                                             <tr class="tr-shadow">
                                                 <td>
                                                     <span class="block-email">0123</span>
                                                 </td>
-                                                <td class="desc">Trần Vĩnh Liêm</td>
+                                                <td class="desc">{{data.name}}</td>
                                                 <td>
-                                                    <span class="block-email">0123456789</span>
+                                                    <span class="block-email">{{data.phone}}</span>
                                                 </td>
-                                                <td>2018-09-27 02:12</td>
+                                                <td>{{data.timereported}}</td>
                                                 <td>
-                                                    <span class="status--process">Đang tiến hành</span>
+                                                    <span class="status--process">{{data.status}}</span>
                                                 </td>
                                                 <td>
                                                     <div class="table-data-feature">
@@ -212,29 +196,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <span class="block-email">0123</span>
-                                                </td>
-                                                <td class="desc">Huỳnh Thị Khánh Ly</td>
-                                                <td>
-                                                    <span class="block-email">0123456789</span>
-                                                </td>
-                                                <td>2018-09-27 02:12</td>
-                                                <td>
-                                                    <span class="status--denied">Hoàn thành</span>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="zmdi zmdi-edit"></i>
-                                                        </button>
-                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="zmdi zmdi-delete"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -337,6 +299,17 @@
                                     <div class="card-body card-block">
                                         <form action="{{ url_for('menu') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
                                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="distance" class=" form-control-label">Trạng thái</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select name="status" id="status" class="form-control-sm form-control">
+                                                        <option value="Đang tiến hành" selected>Đang tiến hành</option>
+                                                        <option value="Hoàn thành">Hoàn thành</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label for="fullname" class=" form-control-label">Họ và tên</label>
