@@ -126,7 +126,10 @@ def menu():
                 add_customer(jsondata)
                 customers_raw = get_customers()
                 for data in customers_raw:
-                    customers.append(data)
+                    if data.is_display == 1:
+                        customers.append(data)
+                    else:
+                        continue
                 return redirect(url_for('menu'))
             except Exception as e:
                 return render_template('error.html', message='Error occured: {}'.format(str(e)), redirect='/menu')

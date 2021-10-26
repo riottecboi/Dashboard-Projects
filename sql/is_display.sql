@@ -1,0 +1,1 @@
+alter table customers add is_display tinyint(1) default 1 after status;
