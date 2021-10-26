@@ -126,16 +126,25 @@ def menu():
                 add_customer(jsondata)
                 customers_raw = get_customers()
                 for data in customers_raw:
-                    if data.is_display == 1:
-                        customers.append(data)
+                    if len(customers) == 10:
+                        break
                     else:
-                        continue
+                        if data.is_display == 1:
+                            customers.append(data)
+                        else:
+                            continue
                 return redirect(url_for('menu'))
             except Exception as e:
                 return render_template('error.html', message='Error occured: {}'.format(str(e)), redirect='/menu')
         customers_raw = get_customers()
         for data in customers_raw:
-            customers.append(data)
+            if len(customers) == 10:
+                break
+            else:
+                if data.is_display == 1:
+                    customers.append(data)
+                else:
+                    continue
         return render_template('index.html', customers=customers, user=current_user.username)
     else:
         return render_template('error.html',  message='Authentication error', redirect='/login')
