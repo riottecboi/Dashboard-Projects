@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey, DateTime, Boolean, UniqueConstraint, Text, UnicodeText
+from sqlalchemy import Column, Integer, String, SmallInteger, ForeignKey, DateTime, Boolean, UniqueConstraint, Text, UnicodeText
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from os import urandom
@@ -59,6 +59,7 @@ class Customer(Base):
     dob = Column(String(16,convert_unicode=True))
     phone = Column(Integer, nullable=False, unique=True)
     status = Column(String(32, convert_unicode=True, collation='utf8mb4_general_ci'), nullable=False)
+    is_display = Column(SmallInteger,default=1)
     # rev = Column(Text(convert_unicode=True), nullable=False)#right eye vision
     # lev = Column(Text(convert_unicode=True), nullable=False)#left eye vision
     # distance = Column(String(64,convert_unicode=True,collation='utf8mb4_general_ci'))#(far, close, both)

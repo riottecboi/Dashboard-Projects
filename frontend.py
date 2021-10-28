@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from flask import Flask, render_template, request, make_response, redirect, url_for, Response, stream_with_context, session
 from flask_wtf.csrf import CSRFProtect, CSRFError
@@ -9,6 +9,8 @@ from datetime import timedelta
 import json
 from datetime import datetime
 import pytz
+import string
+import random
 
 
 class Configuration(metaclass=MetaFlaskEnv):
@@ -60,10 +62,25 @@ def add_customer(cus_json):
 
 
 def get_customers():
+    customners = []
     session = sessionFactory()
-    customners = session.query(Customer).order_by(Customer.timereported).limit(25).all()
+    datas = session.query(Customer).order_by(desc(Customer.timereported)).limit(50).all()
+    if len(datas) != 0:
+        for data in datas:
+            time = data.timereported.strftime("%d-%m-%Y %H:%M:%S")
+            customners.append({'id': data.id, 'timereported': time, 'name': data.name, 'dob':data.dob,
+                               'phone': data.phone, 'status': data.status, 'is_display': data.is_display})
     session.close()
     return customners
+
+def get_customer_histories(id):
+    histories = []
+    session = sessionFactory()
+    datas = session.query(Record).filter_by(customerid=id).first()
+    for data in json.loads(datas.jsondata):
+        histories.append(data)
+    session.close()
+    return histories
 
 def update_status(id, status):
     session = sessionFactory()
@@ -91,10 +108,31 @@ def init():
 @app.route('/menu', methods=['GET', 'POST'])
 def menu():
     customers = []
+    bill = []
     if ss.get('if_logged') == True:
         if request.method == 'POST':
             try:
+                drug_name = request.form.getlist('drug_name')
+                day_per_times = request.form.getlist('day_per_times')
+                quantity_per_times = request.form.getlist('quantity_per_times')
+                method = request.form.getlist('method')
+                eyes = request.form.getlist('eyes')
+                use_when = request.form.getlist('use_when')
+                quantity = request.form.getlist('quantity')
+                unit = request.form.getlist('unit')
+                for a, b, c, d, e, f, g, h in zip(drug_name, day_per_times, quantity_per_times, method, eyes, use_when, quantity, unit):
+                    bill.append({
+                        "drug_name" : a,
+                        "day_per_times" : b,
+                        "quantity_per_times" : c,
+                        "method" : d,
+                        "eyes" : e,
+                        "use_when" : f,
+                        "quantity" : g,
+                        "unit" : h
+                    })
                 jsondata ={
+                    "id": ''.join(random.choices(string.ascii_uppercase + string.digits, 4)),
                     "history": datetime.now(pytz.timezone('Asia/Bangkok')).strftime('%d-%m-%Y %H:%M:%S'),
                     "status": request.form.get('status'),
                     "name" : request.form.get('fullname'),
@@ -112,14 +150,7 @@ def menu():
                     "pd" : request.form.get('pd'),
                     "dre" : request.form.get('dre'),
                     "dle" : request.form.get('dle'),
-                    "drug_name" : request.form.get('drug_name'),
-                    "day_per_times" : request.form.get('day_per_times'),
-                    "quantity_per_times" : request.form.get('quantity_per_times'),
-                    "method" : request.form.get('method'),
-                    "eyes" : request.form.get('eyes'),
-                    "use_when" : request.form.get('use_when'),
-                    "quantity" : request.form.get('quantity'),
-                    "unit" : request.form.get('unit'),
+                    "bill": bill,
                     "lens" : request.form.get('lens'),
                     "note" : request.form.get('note')
                 }
@@ -129,7 +160,9 @@ def menu():
                     if len(customers) == 10:
                         break
                     else:
-                        if data.is_display == 1:
+                        if data['is_display'] == 1:
+                            history = get_customer_histories(data['id'])
+                            data['history'] = history
                             customers.append(data)
                         else:
                             continue
@@ -141,7 +174,9 @@ def menu():
             if len(customers) == 10:
                 break
             else:
-                if data.is_display == 1:
+                if data['is_display'] == 1:
+                    history = get_customer_histories(data['id'])
+                    data['history'] = history
                     customers.append(data)
                 else:
                     continue
@@ -180,7 +215,7 @@ def status():
     id = request.form.get('id')
     check = request.form.get('update')
     if check == 'Hoàn thành':
-        status = 'Đang thực hiện'
+        status = 'Đang tiến hành'
     else:
         status = 'Hoàn thành'
     try:
@@ -189,3 +224,8 @@ def status():
         print(str(e))
         pass
     return redirect(url_for('menu'))
+
+@app.route('/detail/<date>', methods=['GET'])
+def detail(date):
+    check = get_customer_histories()
+
