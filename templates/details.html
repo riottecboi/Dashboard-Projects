@@ -5,9 +5,9 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel ="icon" sizes="300x300" href = "{{ url_for('static',filename='images/icon/techinno.png') }}" type = "image/x-icon">
     <!-- Title Page-->
-    <title>Dashboard</title>
+    <title>Lịch sử</title>
 
     <!-- Fontfaces css-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-face.css')}}">
@@ -203,7 +203,7 @@
                                                     <label for="phone" class=" form-control-label">Số điện thoại</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="number" disabled="" class="form-control" value="0{{data['phone']}}">
+                                                    <input type="number" disabled="" class="form-control" value="{{data['phone']}}">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
