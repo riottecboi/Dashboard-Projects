@@ -42,7 +42,7 @@ login = LoginManager(app)
 def add_customer(cus_json):
     records = []
     session = sessionFactory()
-    check = session.query(Customer.id).filter_by(phone=cus_json['phone']).first()
+    check = session.query(Customer.id).filter_by(phone=cus_json['phone']).filter_by(dob=cus_json['dob']).first()
     if check is None:
         customer = Customer(name=cus_json['name'], dob=cus_json['dob'], phone=cus_json['phone'], status=cus_json['status'])
         session.add(customer)
@@ -132,7 +132,7 @@ def menu():
                         "unit" : h
                     })
                 jsondata ={
-                    "id": ''.join(random.choices(string.ascii_uppercase + string.digits, 4)),
+                    "id": ''.join(random.choices(string.ascii_uppercase + string.digits, k=4)),
                     "history": datetime.now(pytz.timezone('Asia/Bangkok')).strftime('%d-%m-%Y %H:%M:%S'),
                     "status": request.form.get('status'),
                     "name" : request.form.get('fullname'),
@@ -225,7 +225,15 @@ def status():
         pass
     return redirect(url_for('menu'))
 
-@app.route('/detail/<date>', methods=['GET'])
-def detail(date):
-    check = get_customer_histories()
-
+@app.route('/history/<id>', methods=["GET"])
+def history(id):
+    history = []
+    try:
+        check = get_customer_histories(id)
+        if len(check) != 0:
+            history.extend(check)
+            return render_template('details.html', history=history)
+        else:
+            return render_template('error.html', message='No history found', redirect='/menu')
+    except Exception as e:
+        return render_template('error.html', message='Error occurred: {}'.format(str(e)), redirect='/menu')

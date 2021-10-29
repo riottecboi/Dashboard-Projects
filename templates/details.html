@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title Page-->
+    <title>Dashboard</title>
+
+    <!-- Fontfaces css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-face.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/font-awesome-4.7/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/font-awesome-5/css/fontawesome-all.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/mdi-font/css/material-design-iconic-font.min.css')}}">
+
+
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/bootstrap-4.1/bootstrap.min.css')}}">
+
+    <!-- Vendor css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/animsition/animsition.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/wow/animate.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/css-hamburgers/hamburgers.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/slick/slick.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/select2/select2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='tools/perfect-scrollbar/perfect-scrollbar.css')}}">
+
+    <!-- Main css-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/theme.css')}}">
+
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a href="#">
+                            <img src="../static/images/icon/techinno.png" alt="Techinno" width="179" height="52" style="padding: 0 50px;"/>
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="index.html">Dashboard 1</a>
+                                </li>
+                                <li>
+                                    <a href="index2.html">Dashboard 2</a>
+                                </li>
+                                <li>
+                                    <a href="index3.html">Dashboard 3</a>
+                                </li>
+                                <li>
+                                    <a href="index4.html">Dashboard 4</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <a href="{{url_for('menu')}}">
+                <img src="../static/images/icon/techinno.png" alt="Techinno" width="179" height="52" style="padding: 0 15px; margin-left: 50px" />
+            </a>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="index.html">Dashboard 1</a>
+                                </li>
+                                <li>
+                                    <a href="index2.html">Dashboard 2</a>
+                                </li>
+                                <li>
+                                    <a href="index3.html">Dashboard 3</a>
+                                </li>
+                                <li>
+                                    <a href="index4.html">Dashboard 4</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                            <form class="form-header" action="" method="POST">
+                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Tìm kiếm" />
+                                <button class="au-btn--submit" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                            <div class="header-button">
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#"><i class="fa fa-user" style="margin-right: 10px"></i>{{user}}</a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <a href="{{url_for('logout')}}">
+                                                    <i class="zmdi zmdi-power"></i>Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">Tìm thấy {{history|length}} lịch sử khám</h2>
+<!--                                    <button class="au-btn au-btn-icon au-btn&#45;&#45;blue">-->
+<!--                                        <i class="zmdi zmdi-plus"></i>add item</button>-->
+                                </div>
+                            </div>
+                        </div>
+                        {% for data in history %}
+                        <div class="row m-t-30">
+                            <div class="col-lg-12">
+                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
+                                    <div class="card-header">
+                                        <strong>{{data['history']}}</strong>
+                                    </div>
+                                    <div class="card-body card-block">
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="distance" class=" form-control-label">Trạng thái</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" class="form-control" value="{{data['status']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="fullname" class=" form-control-label">Họ và tên</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" class="form-control" value="{{data['name']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="dob" class=" form-control-label">Năm sinh</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" class="form-control" value="{{data['dob']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="phone" class=" form-control-label">Số điện thoại</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="number" disabled="" class="form-control" value="0{{data['phone']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label"><strong>THỊ LỰC KHÔNG KÍNH</strong></label>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="rev" class=" form-control-label">Mắt phải</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" class="form-control" value="{{data['rev']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="lev" class=" form-control-label">Mắt trái</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" class="form-control" value="{{data['lev']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="distance" class=" form-control-label">Khoảng cách</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" class="form-control" value="{{data['distance']}}">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <div class="table-responsive table-responsive-data2">
+                                                        <table class="table table-data2">
+                                                            <thead>
+                                                                <tr class="tr-shadow">
+                                                                    <th>Nhìn xa</th>
+                                                                    <th>Độ kính</th>
+                                                                    <th>Thị lực</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="tr-shadow">
+                                                                    <td>Mắt phải</td>
+                                                                    <td><input type="text" disabled="" value="{{data['frevo']}}" class="form-control"></td>
+                                                                    <td><input type="text" disabled="" value="{{data['frev']}}" class="form-control"></td>
+                                                                </tr>
+                                                                <tr class="spacer"></tr>
+                                                                <tr class="tr-shadow">
+                                                                    <td>Mắt trái</td>
+                                                                    <td><input type="text" disabled="" value="{{data['flevo']}}" class="form-control"></td>
+                                                                    <td><input type="text" disabled="" value="{{data['flev']}}" class="form-control"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <div class="table-responsive table-responsive-data2">
+                                                        <table class="table table-data2">
+                                                            <thead>
+                                                                <tr class="tr-shadow">
+                                                                    <th>Nhìn gần (ADD)</th>
+                                                                    <th>Độ kính</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="tr-shadow">
+                                                                    <td>Mắt phải</td>
+                                                                    <td><input type="text" disabled="" value="{{data['crevo']}}" class="form-control"></td>
+                                                                    <td><input type="text" disabled="" class="form-control"></td>
+                                                                </tr>
+                                                                <tr class="spacer"></tr>
+                                                                <tr class="tr-shadow">
+                                                                    <td>Mắt trái</td>
+                                                                    <td><input type="text" disabled="" value="{{data['clevo']}}" class="form-control"></td>
+                                                                    <td><input type="text" disabled="" class="form-control"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="pd" class=" form-control-label">Khoảng cách đồng tử (PD)</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" value="{{data['pd']}}" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label"><strong>CHẨN ĐOÁN</strong></label>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="dre" class=" form-control-label">Chẩn đoán mắt phải</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" value="{{data['dre']}}" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="dle" class=" form-control-label">Chẩn đoán mắt trái</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" value="{{data['dle']}}" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label"><strong>TOA THUỐC</strong></label>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="table-responsive table-data">
+                                                        <table class="table" >
+                                                            <thead>
+                                                                <tr class="tr-shadow">
+                                                                    <th>Tên thuốc</th>
+                                                                    <th>Lần/ngày</th>
+                                                                    <th>Số lượng/lần</th>
+                                                                    <th>Phương thức</th>
+                                                                    <th>Mắt</th>
+                                                                    <th>Sử dụng</th>
+                                                                    <th>Số lượng</th>
+                                                                    <th>Đơn vị</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                            {% for i in data['bill'] %}
+                                                            <tr class="tr-shadow" >
+                                                                <td><input type="text" disabled="" value="{{i['drug_name']}}"  class="form-control" style="width: auto"></td>
+                                                                <td><input type="number" disabled="" value="{{i['day_per_times']}}"  name="day_per_times" class="form-control" style="width: auto"></td>
+                                                                <td><input type="number" disabled="" value="{{i['quantity_per_times']}}"  name="quantity_per_times" class="form-control" style="width: auto"></td>
+                                                                <td>
+                                                                    <input type="text" disabled="" value="{{i['method']}}"  class="form-control" style="width: auto">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" disabled="" value="{{i['eyes']}}"  class="form-control" style="width: auto">
+                                                                </td>
+                                                                <td><input type="text" disabled="" value="{{i['use_when']}}"  class="form-control" style="width: auto"></td>
+                                                                <td><input type="number" disabled="" value="{{i['quantity']}}" class="form-control" style="width: auto"></td>
+                                                                <td>
+                                                                    <input type="text" disabled="" value="{{i['unit']}}"  class="form-control" style="width: auto">
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="lens" class=" form-control-label">Loại tròng</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input type="text" disabled="" value="{{data['lens']}}" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="note" class=" form-control-label">Ghi chú</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <textarea rows="9" disabled="" class="form-control">{{data['note']}}</textarea>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2021 Techinno</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+    <!-- Jquery JS-->
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery-3.2.1.min.js')}}"></script>
+    <!-- Bootstrap JS-->
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/bootstrap-4.1/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/bootstrap-4.1/bootstrap.min.js')}}"></script>
+    <!-- Vendor JS-->
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/slick/slick.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/wow/wow.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/animsition/animsition.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/bootstrap-progressbar/bootstrap-progressbar.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/counter-up/jquery.waypoints.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/counter-up/jquery.counterup.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/circle-progress/circle-progress.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='tools/select2/select2.min.js')}}"></script>
+
+    <!-- Main JS-->
+    <script type="text/javascript" src="{{ url_for('static',filename='js/main.js')}}"></script>
+
+</body>
+
+</html>
+<!-- end document-->

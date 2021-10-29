@@ -80,7 +80,7 @@
 
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
-            <a href="#">
+            <a href="{{url_for('menu')}}">
                 <img src="../static/images/icon/techinno.png" alt="Techinno" width="179" height="52" style="padding: 0 15px; margin-left: 50px" />
             </a>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -153,45 +153,7 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-            <!--MODAL FOR HISTORY-->
             {% for data in customers %}
-            <div class="modal fade" id="history{{data.id}}" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="largeModalLabel">Bệnh nhân: <strong>{{data['name']}}</strong></h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-                            <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2">
-                                    <thead>
-                                        <tr class="tr-shadow">
-                                            <th>Tìm thấy tổng cộng <strong>{{data['history']|length}}</strong> lịch sử khám</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for time in data['history'] %}
-                                        <tr class="tr-shadow">
-                                            <td data-toggle="modal" data-dismiss="modal" data-target="#detail{{time['history']}}">{{time['history']}}</td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
-                                        <tr class="tr-shadow">
-                                            <td>{{time['history']}}</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						</div>
-					</div>
-				</div>
-			</div>
             <!--MODAL FOR CURRENT RESULT-->
             <div class="modal fade" id="item{{data['id']}}" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -418,7 +380,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-dismiss="modal" data-target="#history{{data.id}}">Lịch sử</button>
+                            <a href="{{ url_for('history', id=data.id) }}"><button type="button" class="btn btn-primary">Lịch sử</button></a>
                         </div>
                     </div>
                 </div>
@@ -610,7 +572,7 @@
                                                     <label for="phone" class=" form-control-label">Số điện thoại</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="number" id="phone" name="phone" placeholder="Nhập số điện thoại" class="form-control">
+                                                    <input type="number" maxlength="10" minlength="10" id="phone" name="phone" placeholder="Nhập số điện thoại" class="form-control">
                                                     <small class="help-block form-text">Vui lòng nhập số điện thoại</small>
                                                 </div>
                                             </div>
