@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
-from flask import Flask, render_template, request, make_response, redirect, url_for, Response, stream_with_context, session
+from flask import Flask, render_template, request,  redirect, url_for,  session
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_login import LoginManager, login_user, login_required, current_user
 from flask_env import MetaFlaskEnv
@@ -101,6 +101,25 @@ def get_customers():
                                'phone': data.phone, 'status': data.status, 'is_display': data.is_display})
     session.close()
     return customners
+
+def get_search_customers(phone=None, name=None):
+    customers = []
+    session = sessionFactory()
+    if name is not None:
+        datas = session.query(Customer).filter(Customer.name.like("%{}%".format(name))).all()
+        if len(datas) != 0:
+            for data in datas:
+                time = data.timereported.strftime("%d-%m-%Y %H:%M:%S")
+                customers.append({'id': data.id, 'timereported': time, 'name': data.name, 'dob': data.dob,
+                                   'phone': data.phone, 'status': data.status, 'is_display': data.is_display})
+    else:
+        data = session.query(Customer).filter_by(phone=phone).first()
+        if data is not None:
+            time = data.timereported.strftime("%d-%m-%Y %H:%M:%S")
+            customers.append({'id': data.id, 'timereported': time, 'name': data.name, 'dob': data.dob,
+                          'phone': data.phone, 'status': data.status, 'is_display': data.is_display})
+    session.close()
+    return customers
 
 def get_customer_histories(id):
     histories = []
@@ -338,6 +357,28 @@ def hide():
     except Exception as e:
         return render_template('error.html', message='Lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
     return redirect(url_for('menu'))
+
+@app.route('/search', methods=['POST'])
+def search():
+    search_for = request.form.get('search')
+    return render_template('error.html', message='Tìm kiếm thông tin cho {}'.format(search_for), redirect="/result?search=" + search_for)
+
+@app.route('/result', methods=['GET'])
+def result():
+    customers=[]
+    check = request.args.get('search')
+    if check.isnumeric() is True:
+        customer_raw = get_search_customers(phone=int(check))
+    else:
+        customer_raw = get_search_customers(name=check)
+    if len(customer_raw) != 0:
+        for data in customer_raw:
+            history = get_customer_histories(data['id'])
+            data['history'] = history
+            customers.append(data)
+        return render_template('search.html', customers=customers, user=current_user.username)
+    else:
+        return render_template('error.html', message='Không tìm thấy kết quả', redirect='/menu')
 
 if __name__ == '__main__':
     app.run()

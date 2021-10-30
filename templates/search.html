@@ -8,7 +8,7 @@
     <link rel ="icon" sizes="300x300" href = "{{ url_for('static',filename='images/icon/techinno.png') }}" type = "image/x-icon">
 
     <!-- Title Page-->
-    <title>Trang chủ</title>
+    <title>Tìm kiếm</title>
 
     <!-- Fontfaces css-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-face.css')}}">
@@ -477,7 +477,7 @@
                     </div>
                 </div>
             </div>
-            <!--MODAL FOR CURRENT RESULT-->
+            <!--MODAL FOR LATEST RESULT-->
             <div class="modal fade" id="item{{data['id']}}" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -716,14 +716,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">Tổng quan</h2>
-<!--                                    <button class="au-btn au-btn-icon au-btn&#45;&#45;blue">-->
-<!--                                        <i class="zmdi zmdi-plus"></i>add item</button>-->
+                                    <h2 class="title-1">Tìm thấy {{customers|length}} kết quả </h2>
                                 </div>
                             </div>
                         </div>
                         <div class="row m-t-30">
-                            <div class="col-lg-8">
+                            <div class="col-lg-12">
                                 <div class="table-responsive table--no-card m-b-40">
                                     <table class="table table-data2">
                                         <tbody>
@@ -735,402 +733,23 @@
                                                 <td>0{{data['phone']}}</td>
                                                 <td>{{data['timereported']}}</td>
                                                 <td>
-                                                    <form action="{{ url_for('status') }}" method="POST">
-                                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                                        <input type="hidden" name="id" value="{{data['id']}}">
-                                                        {% if data['status'] != 'Hoàn thành' %}
-                                                        <button name="update" type="submit" class="btn btn-success btn-sm" value="{{data['status']}}">{{data['status']}}</button>
-                                                        {% else %}
-                                                        <button name="update" type="submit" class="btn btn-danger btn-sm" value="{{data['status']}}">{{data['status']}}</button>
-                                                        {% endif %}
-                                                    </form>
-<!--                                                    <span class="status&#45;&#45;process">{{data.status}}</span>-->
+                                                    {% if data['status'] != 'Hoàn thành' %}
+                                                    <button name="update" class="btn btn-success btn-sm" value="{{data['status']}}">{{data['status']}}</button>
+                                                    {% else %}
+                                                    <button name="update" class="btn btn-danger btn-sm" value="{{data['status']}}">{{data['status']}}</button>
+                                                    {% endif %}
                                                 </td>
                                                 <td>
                                                     <div class="table-data-feature">
                                                         <button class="item" data-toggle="modal" data-target="#edit{{data.id}}" data-placement="top">
                                                             <i class="zmdi zmdi-edit"></i>
                                                         </button>
-                                                        <form action="{{ url_for('hide') }}" method="POST">
-                                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                                            <input type="hidden" name="hideid" value="{{data['id']}}">
-                                                            <button class="item" type="submit">
-                                                                <i class="fa fa-eye-slash"></i>
-                                                            </button>
-                                                        </form>
-
                                                     </div>
                                                 </td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
                                     </table>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
-                                    <div class="au-card-title">
-                                        <div class="bg-overlay bg-overlay--blue"></div>
-                                        <h3>Ghi chú</h3>
-                                        <button class="au-btn-plus">
-                                            <i class="zmdi zmdi-plus"></i>
-                                        </button>
-                                    </div>
-                                    <div class="au-task js-list-load">
-                                        <div class="au-task__title">
-                                            <p>Tasks for Bs Lam</p>
-                                        </div>
-                                        <div class="au-task-list js-scrollbar3">
-                                            <div class="au-task__item au-task__item--danger">
-                                                <div class="au-task__item-inner">
-                                                    <h6>
-                                                        <span class="status--denied">Done</span>
-                                                    </h6>
-                                                    <h5 class="task m-t-10">
-                                                        <a href="#">Meeting about plan for Admin Template 2018</a>
-                                                    </h5>
-                                                    <span class="time">10:00 AM</span>
-                                                </div>
-                                            </div>
-                                            <div class="au-task__item au-task__item--warning">
-                                                <div class="au-task__item-inner">
-                                                    <h6>
-                                                        <span class="status--denied">Done</span>
-                                                    </h6>
-                                                    <h5 class="task m-t-10">
-                                                        <a href="#">Create new task for Dashboard</a>
-                                                    </h5>
-                                                    <span class="time">11:00 AM</span>
-                                                </div>
-                                            </div>
-                                            <div class="au-task__item au-task__item--primary">
-                                                <div class="au-task__item-inner">
-                                                    <h6>
-                                                        <span class="status--denied">Done</span>
-                                                    </h6>
-                                                    <h5 class="task m-t-10">
-                                                        <a href="#">Meeting about plan for Admin Template 2018</a>
-                                                    </h5>
-                                                    <span class="time">02:00 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="au-task__item au-task__item--success">
-                                                <div class="au-task__item-inner">
-                                                    <h6>
-                                                        <span class="status--denied">Done</span>
-                                                    </h6>
-                                                    <h5 class="task m-t-10">
-                                                        <a href="#">Create new task for Dashboard</a>
-                                                    </h5>
-                                                    <span class="time">03:30 PM</span>
-                                                </div>
-                                            </div>
-                                            <div class="au-task__item au-task__item--danger js-load-item">
-                                                <div class="au-task__item-inner">
-                                                    <h6>
-                                                        <span class="status--denied">Done</span>
-                                                    </h6>
-                                                    <h5 class="task m-t-10">
-                                                        <a href="#">Meeting about plan for Admin Template 2018</a>
-                                                    </h5>
-                                                    <span class="time">10:00 AM</span>
-                                                </div>
-                                            </div>
-                                            <div class="au-task__item au-task__item--warning js-load-item">
-                                                <div class="au-task__item-inner">
-                                                    <h6>
-                                                        <span class="status--denied">Done</span>
-                                                    </h6>
-                                                    <h5 class="task m-t-10">
-                                                        <a href="#">Create new task for Dashboard</a>
-                                                    </h5>
-                                                    <span class="time">11:00 AM</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="au-task__footer">
-                                            <button class="au-btn au-btn-load js-load-btn">tải thêm</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
-                                    <div class="card-header">
-                                        <strong>Thêm thông tin</strong>
-                                    </div>
-                                    <div class="card-body card-block">
-                                        <form action="{{ url_for('menu') }}" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="status" class=" form-control-label">Trạng thái</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <select name="status" id="status" class="form-control-sm form-control">
-                                                        <option value="Đang tiến hành" selected>Đang tiến hành</option>
-                                                        <option value="Hoàn thành">Hoàn thành</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="fullname" class=" form-control-label">Họ và tên</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="fullname" name="fullname" placeholder="Họ và tên" class="form-control">
-                                                    <small class="form-text text-muted">Vui lòng nhập họ và tên</small>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="dob" class=" form-control-label">Năm sinh</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" class="form-control">
-                                                    <small class="form-text text-muted">Vui lòng nhập năm sinh</small>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="phone" class=" form-control-label">Số điện thoại</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="number" maxlength="10" minlength="10" id="phone" name="phone" placeholder="Nhập số điện thoại" class="form-control">
-                                                    <small class="help-block form-text">Vui lòng nhập số điện thoại</small>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label class=" form-control-label"><strong>THỊ LỰC KHÔNG KÍNH</strong></label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="rev" class=" form-control-label">Mắt phải</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="rev" name="rev" placeholder="Nhập số độ mắt phải" class="form-control">
-                                                    <small class="help-block form-text">Vui lòng nhập số độ mắt phải</small>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="lev" class=" form-control-label">Mắt trái</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="lev" name="lev" placeholder="Nhập số độ mắt trái" class="form-control">
-                                                    <small class="help-block form-text">Vui lòng nhập số độ mắt trái</small>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="distance" class=" form-control-label">Khoảng cách</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <select name="distance" id="distance" class="form-control-sm form-control">
-                                                        <option disabled selected>Lựa chọn</option>
-                                                        <option value="Nhìn xa">Nhìn xa</option>
-                                                        <option value="Nhìn gần">Nhìn gần</option>
-                                                        <option value="Cả hai">Cả hai</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <div class="table-responsive table-responsive-data2">
-                                                        <table class="table table-data2">
-                                                            <thead>
-                                                                <tr class="tr-shadow">
-                                                                    <th>Nhìn xa</th>
-                                                                    <th>Độ kính</th>
-                                                                    <th>Thị lực</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr class="tr-shadow">
-                                                                    <td>Mắt phải</td>
-                                                                    <td><input type="text" id="frevo" name="frevo" placeholder="Nhập số độ mắt phải" class="form-control"></td>
-                                                                    <td><input type="text" id="frev" name="frev" placeholder="Nhập thị lực mắt phải" class="form-control"></td>
-                                                                </tr>
-                                                                <tr class="spacer"></tr>
-                                                                <tr class="tr-shadow">
-                                                                    <td>Mắt trái</td>
-                                                                    <td><input type="text" id="flevo" name="flevo" placeholder="Nhập số độ mắt trái" class="form-control"></td>
-                                                                    <td><input type="text" id="flev" name="flev" placeholder="Nhập thị lực mắt trái" class="form-control"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <div class="table-responsive table-responsive-data2">
-                                                        <table class="table table-data2">
-                                                            <thead>
-                                                                <tr class="tr-shadow">
-                                                                    <th>Nhìn gần (ADD)</th>
-                                                                    <th>Độ kính</th>
-                                                                    <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr class="tr-shadow">
-                                                                    <td>Mắt phải</td>
-                                                                    <td><input type="text" id="crevo" name="crevo" placeholder="Nhập số độ mắt phải" class="form-control"></td>
-                                                                    <td><input type="text" id="dbr" name="dbr" disabled="" class="form-control"></td>
-                                                                </tr>
-                                                                <tr class="spacer"></tr>
-                                                                <tr class="tr-shadow">
-                                                                    <td>Mắt trái</td>
-                                                                    <td><input type="text" id="clevo" name="clevo" placeholder="Nhập số độ mắt trái" class="form-control"></td>
-                                                                    <td><input type="text" id="dbl" name="dbl" disabled="" class="form-control"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="pd" class=" form-control-label">Khoảng cách đồng tử (PD)</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="pd" name="pd" placeholder="Vui lòng nhập" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label class=" form-control-label"><strong>CHẨN ĐOÁN</strong></label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="dre" class=" form-control-label">Chẩn đoán mắt phải</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="dre" name="dre" placeholder="Vui lòng nhập" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="dle" class=" form-control-label">Chẩn đoán mắt trái</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="dle" name="dle" placeholder="Vui lòng nhập" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label class=" form-control-label"><strong>TOA THUỐC</strong></label>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <button type="button" onclick="insRow()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>  Thêm</button>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col-12 col-md-12">
-                                                    <div class="table-responsive table-data">
-                                                        <table class="table" id="bill">
-                                                            <thead>
-                                                                <tr class="tr-shadow">
-                                                                    <th></th>
-                                                                    <th>Tên thuốc</th>
-                                                                    <th>Lần/ngày</th>
-                                                                    <th>Số lượng/lần</th>
-                                                                    <th>Phương thức</th>
-                                                                    <th>Mắt</th>
-                                                                    <th>Sử dụng</th>
-                                                                    <th>Số lượng</th>
-                                                                    <th>Đơn vị</th>
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-                                                            <tr class="tr-shadow" id="drug-instructions">
-                                                                <td><button type="button" onclick="deleteRow(this)" class="btn btn-danger btn-sm" style="display:none"><i class="fa fa-minus"></i>  Xóa</button></td>
-                                                                <td><input type="text" id="drug_name" name="drug_name" class="form-control" style="width: auto"></td>
-                                                                <td><input type="number" id="day_per_times" name="day_per_times" class="form-control" style="width: auto"></td>
-                                                                <td><input type="number" id="quantity_per_times" name="quantity_per_times" class="form-control" style="width: auto"></td>
-                                                                <td>
-                                                                    <select name="method" id="method" class="form-control-sm form-control" style="width: auto">
-                                                                        <option disabled selected>Lựa chọn</option>
-                                                                        <option value="Nhỏ">Nhỏ</option>
-                                                                        <option value="Uống">Uống</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select name="eyes" id="eyes" class="form-control-sm form-control" style="width: auto">
-                                                                        <option disabled selected>Lựa chọn</option>
-                                                                        <option value="Mắt phải">Mắt phải</option>
-                                                                        <option value="Mắt trái">Mắt trái</option>
-                                                                        <option value="Cả hai">Cả hai</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input type="text" id="use_when" name="use_when" class="form-control" style="width: auto"></td>
-                                                                <td><input type="number" id="quantity" name="quantity" class="form-control" style="width: auto"></td>
-                                                                <td>
-                                                                    <select name="unit" id="unit" class="form-control-sm form-control" style="width: auto">
-                                                                        <option disabled selected>Lựa chọn</option>
-                                                                        <option value="Lọ">Lọ</option>
-                                                                        <option value="Viên">Viên</option>
-                                                                    </select>
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script>
-                                                function deleteRow(row) {
-                                                  var i = row.parentNode.parentNode.rowIndex;
-                                                  document.getElementById('bill').deleteRow(i);
-                                                }
-
-                                                function insRow() {
-
-                                                    var x = document.getElementById('bill');
-                                                    var new_row = x.rows[1].cloneNode(true);
-                                                    new_row.cells[0].getElementsByTagName('button')[0].removeAttribute('style');
-                                                    x.appendChild(new_row);
-                                                }
-                                            </script>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="lens" class=" form-control-label">Loại tròng</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="lens" name="lens" placeholder="Vui lòng nhập" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="note" class=" form-control-label">Ghi chú</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <textarea name="note" id="note" rows="9" placeholder="Ghi chú..." class="form-control"></textarea>
-                                                </div>
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-dot-circle-o"></i> Lưu thông tin
-                                            </button>
-                                            <button type="reset" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-ban"></i> Reset
-                                            </button>
-                                        </form>
-                                    </div>
                                 </div>
                             </div>
                         </div>
