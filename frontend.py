@@ -338,3 +338,6 @@ def hide():
     except Exception as e:
         return render_template('error.html', message='Lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
     return redirect(url_for('menu'))
+
+if __name__ == '__main__':
+    app.run()
