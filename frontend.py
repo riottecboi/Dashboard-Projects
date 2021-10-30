@@ -285,8 +285,11 @@ def history(id):
     try:
         check = get_customer_histories(id)
         if len(check) != 0:
+            name = ''
+            for n in check:
+                name = n['name']
             history.extend(check)
-            return render_template('details.html', history=history)
+            return render_template('details.html', history=history, name=name)
         else:
             return render_template('error.html', message='Không tìm thấy lịch sử', redirect='/menu')
     except Exception as e:
@@ -361,7 +364,7 @@ def hide():
 @app.route('/search', methods=['POST'])
 def search():
     search_for = request.form.get('search')
-    return render_template('error.html', message='Tìm kiếm thông tin cho {}'.format(search_for), redirect="/result?search=" + search_for)
+    return render_template('error.html', message='Tìm kiếm thông tin', redirect="/result?search=" + search_for)
 
 @app.route('/result', methods=['GET'])
 def result():
@@ -376,7 +379,7 @@ def result():
             history = get_customer_histories(data['id'])
             data['history'] = history
             customers.append(data)
-        return render_template('search.html', customers=customers, user=current_user.username)
+        return render_template('search.html', customers=customers, user=current_user.username, term=check)
     else:
         return render_template('error.html', message='Không tìm thấy kết quả', redirect='/menu')
 
