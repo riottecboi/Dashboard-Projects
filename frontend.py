@@ -14,10 +14,10 @@ import random
 
 
 class Configuration(metaclass=MetaFlaskEnv):
-    SECRET_KEY = "supersecretkey"
-    WTF_CSRF_SECRET_KEY = "supersecretkey"
+    SECRET_KEY = "xxxx"
+    WTF_CSRF_SECRET_KEY = "xxxx"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://localhost:3306/test?user=root&password=root'
+    SQLALCHEMY_DATABASE_URI = 'xxxxx'
     POOL_SIZE = 20
     POOL_RECYCLE = 60
 
