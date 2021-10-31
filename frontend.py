@@ -90,10 +90,13 @@ def update_customer(id, cus_json):
         session.commit()
     session.close()
 
-def get_customers():
+def get_customers(number=None):
     customners = []
     session = sessionFactory()
-    datas = session.query(Customer).order_by(desc(Customer.timereported)).limit(50).all()
+    if number is None:
+        datas = session.query(Customer).order_by(desc(Customer.timereported)).limit(50).all()
+    else:
+        datas = session.query(Customer).order_by(desc(Customer.timereported)).limit(int(number)).all()
     if len(datas) != 0:
         for data in datas:
             time = data.timereported.strftime("%d-%m-%Y %H:%M:%S")
@@ -382,6 +385,34 @@ def result():
         return render_template('search.html', customers=customers, user=current_user.username, term=check)
     else:
         return render_template('error.html', message='Không tìm thấy kết quả', redirect='/menu')
+
+@app.route('/filter', methods=['POST'])
+def filter():
+    number = request.form.get('filter')
+    return render_template('error.html', message='Đang lấy thông tin', redirect="/list?number=" + number)
+
+@app.route('/list', methods=['GET'])
+def list():
+    customers = []
+    try:
+        number_raw = request.args.get('number')
+        if number_raw is None:
+            number = 50
+        else:
+            number=number_raw
+        customer_raw = get_customers(number=number)
+        if len(customer_raw) !=0:
+            for data in customer_raw:
+                history = get_customer_histories(data['id'])
+                data['history'] = history
+                customers.append(data)
+            return render_template('list.html', customers=customers, user=current_user.username, number=number)
+        else:
+            return render_template('error.html', message='Không có dữ liệu', redirect='/menu')
+    except Exception as e:
+        return render_template('error.html', message='Có lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
+
+
 
 if __name__ == '__main__':
     app.run()
