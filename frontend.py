@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from flask import Flask, render_template, request,  redirect, url_for,  session
 from flask_wtf.csrf import CSRFProtect, CSRFError
-from flask_login import LoginManager, login_user, login_required, current_user
+from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_env import MetaFlaskEnv
 from datamodel import User, Customer, Record, Base
 from datetime import timedelta
@@ -154,6 +154,10 @@ def user_loader(username):
     session.close()
     return user
 
+@login.unauthorized_handler
+def unauthorized():
+    return render_template('error.html',  message="Bạn cần đăng nhập để tiếp tục", redirect='/login')
+
 @app.errorhandler(CSRFError)
 def handle_csrf_error(e):
     return render_template('error.html',  message="Hết phiên đăng nhập: {}".format(e.description), redirect='/login')
@@ -164,6 +168,7 @@ def init():
 
 
 @app.route('/menu', methods=['GET', 'POST'])
+@login_required
 def menu():
     customers = []
     bill = []
@@ -266,9 +271,11 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
+    logout_user()
     return render_template('error.html', message='Đăng xuất', redirect='/login')
 
 @app.route('/status', methods=["POST"])
+@login_required
 def status():
     id = request.form.get('id')
     check = request.form.get('update')
@@ -283,6 +290,7 @@ def status():
     return redirect(url_for('menu'))
 
 @app.route('/history/<id>', methods=["GET"])
+@login_required
 def history(id):
     history = []
     try:
@@ -299,6 +307,7 @@ def history(id):
         return render_template('error.html', message='Lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
 
 @app.route('/edit', methods=['POST'])
+@login_required
 def edit():
     bill = []
     try:
@@ -356,6 +365,7 @@ def edit():
         return render_template('error.html', message='Lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
 
 @app.route('/hide', methods=["POST"])
+@login_required
 def hide():
     id = request.form.get('hideid')
     try:
@@ -365,11 +375,13 @@ def hide():
     return redirect(url_for('menu'))
 
 @app.route('/search', methods=['POST'])
+@login_required
 def search():
     search_for = request.form.get('search')
     return render_template('error.html', message='Tìm kiếm thông tin', redirect="/result?search=" + search_for)
 
 @app.route('/result', methods=['GET'])
+@login_required
 def result():
     customers=[]
     check = request.args.get('search')
@@ -387,11 +399,13 @@ def result():
         return render_template('error.html', message='Không tìm thấy kết quả', redirect='/menu')
 
 @app.route('/filter', methods=['POST'])
+@login_required
 def filter():
     number = request.form.get('filter')
     return render_template('error.html', message='Đang lấy thông tin', redirect="/list?number=" + number)
 
 @app.route('/list', methods=['GET'])
+@login_required
 def list():
     customers = []
     try:
@@ -411,8 +425,6 @@ def list():
             return render_template('error.html', message='Không có dữ liệu', redirect='/menu')
     except Exception as e:
         return render_template('error.html', message='Có lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
-
-
 
 if __name__ == '__main__':
     app.run()
