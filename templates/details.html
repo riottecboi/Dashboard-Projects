@@ -55,22 +55,10 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="index.html">Dashboard 1</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Dashboard 4</a>
-                                </li>
-                            </ul>
+                            <a class="js-arrow" href="{{ url_for('menu') }}">
+                                <i class="fas fa-tachometer-alt"></i>Trang chính</a>
+                            <a class="js-arrow" href="{{ url_for('list') }}">
+                                <i class="fas fa-table"></i>Danh sách thông tin</a>
                         </li>
                     </ul>
                 </div>
@@ -87,22 +75,10 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="index.html">Dashboard 1</a>
-                                </li>
-                                <li>
-                                    <a href="index2.html">Dashboard 2</a>
-                                </li>
-                                <li>
-                                    <a href="index3.html">Dashboard 3</a>
-                                </li>
-                                <li>
-                                    <a href="index4.html">Dashboard 4</a>
-                                </li>
-                            </ul>
+                            <a class="js-arrow" href="{{ url_for('menu') }}">
+                                <i class="fas fa-tachometer-alt"></i>Trang chính</a>
+                            <a class="js-arrow" href="{{ url_for('list') }}">
+                                <i class="fas fa-table"></i>Danh sách thông tin</a>
                         </li>
                     </ul>
                 </nav>
