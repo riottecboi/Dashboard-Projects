@@ -699,50 +699,50 @@
                             </div>
                         </div>
                         <div class="row m-t-30">
-                            <div class="col-lg-8">
-                                <div class="table-responsive table--no-card m-b-40">
-                                    <table class="table table-data2">
-                                        <tbody>
-                                            {% for data in customers %}
-                                            <tr class="tr-shadow">
-                                                <td>
-                                                    <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#item{{data.id}}"><span class="block-email">{{data.name}}</span></button>
-                                                </td>
-                                                <td>0{{data['phone']}}</td>
-                                                <td>{{data['timereported']}}</td>
-                                                <td>
-                                                    <form action="{{ url_for('status') }}" method="POST">
-                                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                                        <input type="hidden" name="id" value="{{data['id']}}">
-                                                        {% if data['status'] != 'Hoàn thành' %}
-                                                        <button name="update" type="submit" class="btn btn-success btn-sm" value="{{data['status']}}">{{data['status']}}</button>
-                                                        {% else %}
-                                                        <button name="update" type="submit" class="btn btn-danger btn-sm" value="{{data['status']}}">{{data['status']}}</button>
-                                                        {% endif %}
-                                                    </form>
-<!--                                                    <span class="status&#45;&#45;process">{{data.status}}</span>-->
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <button class="item" data-toggle="modal" data-target="#edit{{data.id}}" data-placement="top">
-                                                            <i class="zmdi zmdi-edit"></i>
-                                                        </button>
-                                                        <form action="{{ url_for('hide') }}" method="POST">
-                                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                                            <input type="hidden" name="hideid" value="{{data['id']}}">
-                                                            <button class="item" type="submit">
-                                                                <i class="fa fa-eye-slash"></i>
-                                                            </button>
-                                                        </form>
+<!--                            <div class="col-lg-8">-->
+<!--                                <div class="table-responsive table&#45;&#45;no-card m-b-40">-->
+<!--                                    <table class="table table-data2">-->
+<!--                                        <tbody>-->
+<!--                                            {% for data in customers %}-->
+<!--                                            <tr class="tr-shadow">-->
+<!--                                                <td>-->
+<!--                                                    <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#item{{data.id}}"><span class="block-email">{{data.name}}</span></button>-->
+<!--                                                </td>-->
+<!--                                                <td>0{{data['phone']}}</td>-->
+<!--                                                <td>{{data['timereported']}}</td>-->
+<!--                                                <td>-->
+<!--                                                    <form action="{{ url_for('status') }}" method="POST">-->
+<!--                                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>-->
+<!--                                                        <input type="hidden" name="id" value="{{data['id']}}">-->
+<!--                                                        {% if data['status'] != 'Hoàn thành' %}-->
+<!--                                                        <button name="update" type="submit" class="btn btn-success btn-sm" value="{{data['status']}}">{{data['status']}}</button>-->
+<!--                                                        {% else %}-->
+<!--                                                        <button name="update" type="submit" class="btn btn-danger btn-sm" value="{{data['status']}}">{{data['status']}}</button>-->
+<!--                                                        {% endif %}-->
+<!--                                                    </form>-->
+<!--&lt;!&ndash;                                                    <span class="status&#45;&#45;process">{{data.status}}</span>&ndash;&gt;-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <div class="table-data-feature">-->
+<!--                                                        <button class="item" data-toggle="modal" data-target="#edit{{data.id}}" data-placement="top">-->
+<!--                                                            <i class="zmdi zmdi-edit"></i>-->
+<!--                                                        </button>-->
+<!--                                                        <form action="{{ url_for('hide') }}" method="POST">-->
+<!--                                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>-->
+<!--                                                            <input type="hidden" name="hideid" value="{{data['id']}}">-->
+<!--                                                            <button class="item" type="submit">-->
+<!--                                                                <i class="fa fa-eye-slash"></i>-->
+<!--                                                            </button>-->
+<!--                                                        </form>-->
 
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+<!--                                                    </div>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            {% endfor %}-->
+<!--                                        </tbody>-->
+<!--                                    </table>-->
+<!--                                </div>-->
+<!--                            </div>-->
 <!--                            <div class="col-lg-4">-->
 <!--                                <div class="au-card au-card&#45;&#45;no-shadow au-card&#45;&#45;no-pad m-b-40">-->
 <!--                                    <div class="au-card-title">-->

@@ -54,10 +54,10 @@ class Customer(Base):
     __tablename__ = 'customers'
     ######### CUSTOMER'S PART ##########
     id = Column(Integer, primary_key=True, autoincrement=True)
-    timereported = Column(DateTime, default=datetime.now(pytz.timezone('Asia/Bangkok')))
+    timereported = Column(DateTime, nullable=False)
     name = Column(String(128,convert_unicode=True,collation='utf8mb4_general_ci'), nullable=False)
     dob = Column(String(16,convert_unicode=True))
-    phone = Column(Integer, nullable=False, unique=True)
+    phone = Column(Integer, nullable=False)
     status = Column(String(32, convert_unicode=True, collation='utf8mb4_general_ci'), nullable=False)
     is_display = Column(SmallInteger,default=1)
     # rev = Column(Text(convert_unicode=True), nullable=False)#right eye vision

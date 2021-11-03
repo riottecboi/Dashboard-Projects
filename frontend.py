@@ -30,7 +30,7 @@ except FileNotFoundError:
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
 app.config['SESSION_COOKIE_SECURE']=True
 mysql_string = app.config['SQLALCHEMY_DATABASE_URI']
-engine = create_engine(mysql_string, pool_pre_ping=True, echo=False,
+engine = create_engine(mysql_string, pool_pre_ping=True, echo=False, encoding='utf-8',
                        pool_size=app.config['POOL_SIZE'], pool_recycle=app.config['POOL_RECYCLE'])
 sessionFactory = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
@@ -42,22 +42,35 @@ login = LoginManager(app)
 def add_customer(cus_json):
     records = []
     session = sessionFactory()
-    check = session.query(Customer.id).filter_by(dob=cus_json['dob']).filter_by(phone=cus_json['phone']).first()
-    if check is None:
-        customer = Customer(name=cus_json['name'], dob=cus_json['dob'], phone=cus_json['phone'], status=cus_json['status'])
+    first_check = session.query(Customer.id).filter_by(phone=cus_json['phone']).first()
+    if first_check is not None:
+        check = session.query(Customer.id).filter_by(dob=cus_json['dob']).first()
+        if check is None:
+            customer = Customer(name=cus_json['name'].lower(), dob=cus_json['dob'], phone=cus_json['phone'],
+                                timereported=datetime.now(pytz.timezone('Asia/Bangkok')), status=cus_json['status'])
+            session.add(customer)
+            session.commit()
+            cus_id = session.query(Customer.id).filter_by(name=cus_json['name']).filter_by(phone=cus_json['phone']).first()
+            record = Record(customerid=cus_id[0], jsondata=json.dumps([cus_json]))
+            session.add(record)
+            session.commit()
+        else:
+            datas = session.query(Record).filter_by(customerid=check[0]).first()
+            for data in json.loads(datas.jsondata):
+                records.append(data)
+            records.insert(0, cus_json)
+            datas.jsondata = json.dumps(records)
+            session.commit()
+    else:
+        customer = Customer(name=cus_json['name'].lower(), dob=cus_json['dob'], phone=cus_json['phone'],
+                            timereported=datetime.now(pytz.timezone('Asia/Bangkok')), status=cus_json['status'])
         session.add(customer)
         session.commit()
         cus_id = session.query(Customer.id).filter_by(name=cus_json['name']).filter_by(phone=cus_json['phone']).first()
         record = Record(customerid=cus_id[0], jsondata=json.dumps([cus_json]))
         session.add(record)
         session.commit()
-    else:
-        datas = session.query(Record).filter_by(customerid=check[0]).first()
-        for data in json.loads(datas.jsondata):
-            records.append(data)
-        records.insert(0, cus_json)
-        datas.jsondata = json.dumps(records)
-        session.commit()
+
     session.close()
 
 def update_customer(id, cus_json):
@@ -66,7 +79,7 @@ def update_customer(id, cus_json):
     check = session.query(Customer).filter_by(id=id).first()
     if check is None:
         customer = Customer(name=cus_json['name'].lower(), dob=cus_json['dob'], phone=cus_json['phone'],
-                            status=cus_json['status'])
+                            timereported=datetime.now(pytz.timezone('Asia/Bangkok')), status=cus_json['status'])
         session.add(customer)
         session.commit()
         cus_id = session.query(Customer.id).filter_by(name=cus_json['name']).filter_by(phone=cus_json['phone']).first()
@@ -229,7 +242,7 @@ def menu():
                             customers.append(data)
                         else:
                             continue
-                return redirect(url_for('menu'))
+                return render_template('error.html', message='Thêm thông tin thành công', redirect='/menu')
             except Exception as e:
                 return render_template('error.html', message='Lỗi xảy ra: {}'.format(str(e)), redirect='/menu')
         customers_raw = get_customers()
