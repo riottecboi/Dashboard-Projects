@@ -857,7 +857,7 @@
                                                     <label for="fullname" class=" form-control-label">Họ và tên</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="text" id="fullname" name="fullname" placeholder="Họ và tên" class="form-control">
+                                                    <input type="text" id="fullname" name="fullname" placeholder="Họ và tên" class="form-control" required>
                                                     <small class="form-text text-muted">Vui lòng nhập họ và tên</small>
                                                 </div>
                                             </div>
@@ -866,7 +866,7 @@
                                                     <label for="dob" class=" form-control-label">Năm sinh</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" class="form-control">
+                                                    <input type="text" id="dob" name="dob" placeholder="DD/MM/YYYY" class="form-control" required>
                                                     <small class="form-text text-muted">Vui lòng nhập năm sinh</small>
                                                 </div>
                                             </div>
@@ -875,7 +875,7 @@
                                                     <label for="phone" class=" form-control-label">Số điện thoại</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="number" maxlength="10" minlength="10" id="phone" name="phone" placeholder="Nhập số điện thoại" class="form-control">
+                                                    <input type="number" maxlength="10" minlength="10" id="phone" name="phone" placeholder="Nhập số điện thoại" class="form-control" required>
                                                     <small class="help-block form-text">Vui lòng nhập số điện thoại</small>
                                                 </div>
                                             </div>
@@ -1035,6 +1035,9 @@
                                                             <tbody>
                                                             <tr class="tr-shadow" id="drug-instructions">
                                                                 <td><button type="button" onclick="deleteRow(this)" class="btn btn-danger btn-sm" style="display:none"><i class="fa fa-minus"></i>  Xóa</button></td>
+                                                                <td><button type="button" onclick="deleteRow(this)" class="btn btn-danger btn-sm" style="display:none"><i class="fa fa-minus"></i>  Sua</button></td>
+                                                                <td><button type="button" onclick="deleteRow(this)" class="btn btn-danger btn-sm" style="display:none"><i class="fa fa-minus"></i>  Them</button></td>
+
                                                                 <td><input type="text" id="drug_name" name="drug_name" class="form-control" style="width: auto"></td>
                                                                 <td><input type="number" id="day_per_times" name="day_per_times" class="form-control" style="width: auto"></td>
                                                                 <td><input type="number" id="quantity_per_times" name="quantity_per_times" class="form-control" style="width: auto"></td>
@@ -1143,7 +1146,6 @@
 
     <!-- Main JS-->
     <script type="text/javascript" src="{{ url_for('static',filename='js/main.js')}}"></script>
-
 </body>
 
 </html>
