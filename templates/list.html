@@ -329,7 +329,7 @@
                                 </div>
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                        <button type="button" onclick="editinsRow()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>  Thêm</button>
+                                        <button type="button" onclick="edit_add_row()" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>  Thêm</button>
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -349,7 +349,8 @@
                                                         <th>Đơn vị</th>
                                                     </tr>
                                                 </thead>
-
+                                                <tr id="editrow0" style="display: none"></tr>
+                                                <tr style="display: none"></tr>
                                                 <tbody>
                                                 {% for i in data['history'][0]['bill'] %}
                                                 <tr class="tr-shadow" >
@@ -415,15 +416,47 @@
                                 </div>
 
                             <script>
-                                function editdeleteRow(row) {
-                                  var i = row.parentNode.parentNode.rowIndex;
-                                  document.getElementById('edit-bill').deleteRow(i);
-                                }
-                                function editinsRow() {
-                                    var x = document.getElementById('edit-bill');
-                                    var new_row = x.rows[1].cloneNode(true);
-                                    new_row.cells[0].getElementsByTagName('button')[0].removeAttribute('style');
-                                    x.appendChild(new_row);
+                                function edit_delete_row(no) {
+                                     document.getElementById("editrow"+no+"").outerHTML="";
+                                    }
+                                function edit_add_row() {
+                                    var table = document.getElementById("edit-bill");
+                                    var table_len = (table.rows.length) - 2;
+                                    var convert =
+                                        "<tr id='editrow" + table_len + "' class=\"tr-shadow\">\n" +
+                                        "              <td>\n" +
+                                        "                  <button type=\"button\" class=\"btn btn-danger btn-sm\" onclick=\"edit_delete_row(" + table_len + ")\"><i class=\"fa fa-minus\" ></i>  Xóa</button>\n" +
+                                        "              </td>\n" +
+                                        "\n" +
+                                        "          <td><input type=\"text\" id='editdrug_name" + table_len + "' name=\"editdrug_name\" class=\"form-control\" style=\"width: auto\"></td>\n" +
+                                        "          <td><input type=\"number\"  id='editday_per_times" + table_len + "' name=\"editday_per_times\" class=\"form-control\" style=\"width: auto\"></td>\n" +
+                                        "          <td><input type=\"number\" id='editquantity_per_times" + table_len + "' name=\"editquantity_per_times\" class=\"form-control\" style=\"width: auto\"></td>\n" +
+                                        "          <td>\n" +
+                                        "              <select name=\"editmethod\" id='editmethod" + table_len + "' class=\"form-control-sm form-control\" style=\"width: auto\">\n" +
+                                        "                      <option disabled selected>Lựa chọn</option>\n" +
+                                        "                      <option value=\"Nhỏ\">Nhỏ</option>\n" +
+                                        "                      <option value=\"Uống\">Uống</option>\n" +
+                                        "              </select>\n" +
+                                        "          </td>\n" +
+                                        "          <td>\n" +
+                                        "              <select name=\"editeyes\" id='editeyes" + table_len + "' class=\"form-control-sm form-control\" style=\"width: auto\">\n" +
+                                        "                      <option disabled selected>Lựa chọn</option>\n" +
+                                        "                      <option value=\"Mắt phải\">Mắt phải</option>\n" +
+                                        "                      <option value=\"Mắt trái\">Mắt trái</option>\n" +
+                                        "                      <option value=\"Cả hai\">Cả hai</option>\n" +
+                                        "              </select>\n" +
+                                        "          </td>\n" +
+                                        "          <td><input type=\"text\" id='edituse_when" + table_len + "' name=\"edituse_when\" class=\"form-control\" style=\"width: auto\"></td>\n" +
+                                        "          <td><input type=\"number\" id='editquantity" + table_len + "' name=\"editquantity\" class=\"form-control\" style=\"width: auto\"></td>\n" +
+                                        "          <td>\n" +
+                                        "              <select name=\"editunit\" id='editunit" + table_len + "' class=\"form-control-sm form-control\" style=\"width: auto\">\n" +
+                                        "                      <option disabled selected>Lựa chọn</option>\n" +
+                                        "                      <option value=\"Lọ\">Lọ</option>\n" +
+                                        "                      <option value=\"Viên\">Viên</option>\n" +
+                                        "              </select>\n" +
+                                        "          </td>\n" +
+                                        "       </tr>"
+                                    var row = table.insertRow(table_len).outerHTML = convert;
                                 }
                             </script>
                             <div class="row form-group">
